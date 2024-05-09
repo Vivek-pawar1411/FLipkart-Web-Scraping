@@ -1,0 +1,92 @@
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+
+for i in range (0,100):
+  url = "https://www.flipkart.com/search?q=mobile%20&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off"+str(i)
+  r=requests.get(url)
+  #print(r)
+  soup=BeautifulSoup(r.text,"lxml")
+  #print(soup)
+
+
+ #for product web url 
+  np=soup.find("a",class_="cn++Ap A1msZJ").get("href")
+  l="https://www.flipkart.com"+np
+#print(l)
+
+Product_name=[]
+Prices=[]
+Detail=[]
+Review=[]
+Votes=[]
+Exchangeoff=[]
+Vote=[]
+Exchange=[]
+for i in range (2,100):
+    url = "https://www.flipkart.com/search?q=mobile%20&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off"+str(1)
+    r=requests.get(url)
+    soup=BeautifulSoup(r.text,"lxml")
+    names=soup.find_all("div",class_="KzDlHZ")
+    box=soup.find("div",class_="DOjaWF gdgoEp")
+#print(names)
+#print(len(names))
+
+  
+#Iterating loop for product name
+  
+    for i in names:
+      name=i.text
+      Product_name.append(name)
+#print(Product_name)
+
+
+#Iterating loop for prices
+
+
+    names_1=box.find_all("div",class_="Nx9bqj _4b5DiR")
+    for i in names_1:
+      names_1=i.text
+      Prices.append(names_1)
+#print(Prices)
+#print(len(Prices))
+
+#Iterating loop for Description
+
+
+
+    names_2=box.find_all("ul",class_="G4BRas")
+    for i in names_2:
+     names_2=i.text
+     Detail.append(names_2)
+#print(Detail)
+
+#Iterating loop for Rating 
+
+    names_3=box.find_all("div",class_="XQDdHH")
+    for i in names_3:
+        names_3=i.text
+        Review.append(names_3)
+#Print(Review)
+#print(len(Review))
+
+
+#Iterating loop for Voting and review
+
+
+    names_3=box.find_all("span",class_="Wphh3N")
+    for i in names_3:
+        names_3=i.text
+        Votes.append(names_3)
+        Vote = [item.replace("\xa0&\xa0", "  ") for item in Votes]
+#print(Vote)
+#print(len(Votes))
+
+
+df=pd.DataFrame({"Product Name":Product_name,"Prices":Prices,"Description":Detail,"Rating":Review,"Review":Vote})
+df.set_index('1', inplace=True)
+print(df.head())
+ 
+#df.to_csv("E:/Download/Interview data/Flipkart/BudgetPhone.csv")
+
+print("Done")

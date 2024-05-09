@@ -1,0 +1,4 @@
+ # Exchangeoff = [item.replace("Big Saving Deal", "") for item in Exchange]
+        # Exchangeoff = [item.replace("Off on Exchange", "") for item in Exchange]
+        # Exchangeoff = [item.replace("Upto", "") for item in Exchange]
+        # Exchangeoff = [item.replace("Top Discount of The Sale", "") for item in Exchange]
